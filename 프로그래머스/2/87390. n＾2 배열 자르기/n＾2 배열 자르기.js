@@ -1,3 +1,4 @@
+//2번째 정답 풀이
 function solution(n, left, right) {
  let arr = [];
   for(let i = left; i <= right; i++){
@@ -12,3 +13,27 @@ function solution(n, left, right) {
   }
   return arr 
 }
+
+//처음 풀이 (그냥 2차원 배열 만들어서 메모리 초과됨 )
+
+function solution(n, left, right) {
+  let totalArr = Array(n)
+    .fill(0)
+    .map((_) => Array(n).fill(n));
+  for (let i = n - 1; i > 0; i--) {
+    totalArr = totalArr.map((arr, arrIdx) => {
+      if (arrIdx < i) {
+        return arr.map((el, idx) => {
+          if (idx < i) {
+            return i;
+          }
+          return el;
+        });
+      } else {
+        return arr;
+      }
+    });
+  }
+  return totalArr.flat().slice(left, right + 1);
+}
+
