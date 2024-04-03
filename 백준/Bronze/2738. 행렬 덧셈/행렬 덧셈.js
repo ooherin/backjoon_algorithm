@@ -1,18 +1,22 @@
-const input = require('fs').readFileSync(process.platform === "linux" ? "/dev/stdin" : "./input.txt").toString().trim().split("\n").map((el) => el.split(" ").map((el) => +el));
-const [N, M] = input.shift();
+const input = require("fs")
+  .readFileSync("/dev/stdin")
+  .toString()
+  .trim()
+  .split("\n");
 
-let arr = new Array(N).fill().map(() => new Array(M).fill(0));
-for (let i = 0; i < N; i++) {
-    for (let j = 0; j < M; j++) {
-        arr[i][j] = input[i][j] + input[i + N][j];
-    }
-}
-let answer = "";
+const [line, count] = input[0].split(" ").map(Number);
 
-for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[0].length; j++) {
-        answer += arr[i][j] + " ";
-    }
-    answer += "\n";
+const arr = Array.from({ length: line }, () => new Array(count).fill(0));
+
+input.shift();
+
+for (let i = 0; i < input.length; i++) {
+  const rest = i % line;
+  const numbers = input[i].split(" ").map(Number);
+  for (let j = 0; j < numbers.length; j++) {
+    arr[rest][j] += numbers[j];
+  }
 }
-console.log(answer.trim());
+
+const answer = arr.map((e) => e.join(" ")).join("\n");
+console.log(answer);
