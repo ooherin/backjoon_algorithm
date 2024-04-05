@@ -1,20 +1,20 @@
-let fs = require("fs");
-let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+const filePath = process.platform === "linux" ? "/dev/stdin" : "input.txt";
+const input = require("fs")
+  .readFileSync(filePath)
+  .toString()
+  .trim()
+  .split("\n");
 
-const [number, a, b] = input;
+const [a, first, second] = input;
 
-const aArr = a
-  .split(" ")
-  .map(Number)
-  .sort((a, b) => b - a);
+let firstNumbers = first.split(" ").map(Number);
+firstNumbers.sort((a, b) => b - a);
 
-const bArr = b
-  .split(" ")
-  .map(Number)
-  .sort((a, b) => a - b);
+let secondNumbers = second.split(" ").map(Number);
+secondNumbers.sort((a, b) => a - b);
 
-const answer = aArr.reduce((acc, cur, index) => {
-  acc += cur * bArr[index];
+const answer = firstNumbers.reduce((acc, cur, index) => {
+  acc += cur * secondNumbers[index];
   return acc;
 }, 0);
 
