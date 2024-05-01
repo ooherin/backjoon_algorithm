@@ -8,9 +8,8 @@ let [target, sequence] = require("fs")
 const sqrt = Math.sqrt(target);
 
 const set = new Set();
-for (let i = 1; i <= sqrt; i++) {
+for (let i = 1; i <= target; i++) {
   if (target % i === 0) {
-    set.add(target / i);
     set.add(i);
   }
 }
