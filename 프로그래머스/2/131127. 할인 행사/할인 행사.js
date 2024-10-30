@@ -1,20 +1,37 @@
 function solution(want, number, discount) {
     var answer = 0;
-    //10일 연속으로 일치할 경우 회원가입
-    const countLength = discount.length - 10;
-
-    let arr = [];
-    for(let i = 0 ; i <= countLength ; i++ ){
-        const discountArr = discount.slice(i , i + 10);
-        const totalDiscount = discountArr.reduce((acc,cur) => {
-            acc[cur] = (acc[cur] || 0 ) + 1;
+    
+        const wantObj = want.reduce((acc,cur,index) => {
+            acc[cur] = number[index];
             return acc;
         },{})
         
-        const result = want.every((item,idx) => {
-            return (totalDiscount[item] || 0) >= number[idx];
-        })
-        result && answer++;
+        
+    for(let i = 0; i < discount.length - 9; i++){
+        const discountProducts = discount.slice(i, i+10);
+        const discountObj = discountProducts.reduce((acc,cur) => {
+            acc[cur] = (acc[cur] || 0) + 1;
+            return acc;
+        },{});
+        
+        if(isShallowEqual(wantObj, discountObj)){
+             answer += 1;
+        }
     }
     return answer;
+}
+
+const isShallowEqual = (obj1, obj2) => {
+    const obj1Keys = Object.keys(obj1);
+    const obj2Keys = Object.keys(obj2);
+    
+    if(obj1Keys.length !== obj2Keys.length) return false;
+    
+    for(const key of obj1Keys){
+        const value1 = obj1[key];
+        const value2 = obj2[key];
+        
+        if(value1 !== value2) return false;
+    }
+    return true;
 }
